@@ -1,5 +1,1 @@
-test/*
-*.o
-*.a
-*.swp
-build
+.swp

@@ -19,6 +19,7 @@
 
 #define MVM_NUM_REGISTERS 16 // Default
 
+#define DEFAULT_HEAP_SIZE 8192
 
 //---------------------------------------------------------
 // DATA STRUCTURES & TYPEDEFS:
@@ -38,6 +39,11 @@ typedef struct VMContext {
     uint32_t numFuns;
     Reg* r;           // Ptr to register array.
     FunPtr* funtable; // Ptr to a funptr table.
+
+    uint32_t pc; //Program Counter
+    uint32_t* code; //The Code DATA
+    uint32_t codesize; //Code size
+    uint8_t Memory[DEFAULT_HEAP_SIZE]; //Memory
 } VMContext;
 
 
@@ -59,6 +65,20 @@ static FunPtr mvm_function_table[MVM_NUM_FUNS];
 
 //---------------------------------------------------------
 // FUNCTIONS:
+void halt(struct VMContext* ctx, const uint32_t instr);
+void load(struct VMContext* ctx, const uint32_t instr);
+void store(struct VMContext* ctx, const uint32_t instr);
+void move(struct VMContext* ctx, const uint32_t instr);
+void puti(struct VMContext* ctx, const uint32_t instr);
+void add(struct VMContext* ctx, const uint32_t instr);
+void sub(struct VMContext* ctx, const uint32_t instr);
+void gt(struct VMContext* ctx, const uint32_t instr);
+void ge(struct VMContext* ctx, const uint32_t instr);
+void eq(struct VMContext* ctx, const uint32_t instr);
+void ite(struct VMContext* ctx, const uint32_t instr);
+void jump(struct VMContext* ctx, const uint32_t instr);
+void _puts(struct VMContext* ctx, const uint32_t instr);
+void _gets(struct VMContext* ctx, const uint32_t instr);
 
 
 // Selects and executes an opcode function from the function pointer table.
@@ -72,11 +92,14 @@ void initVMContext(struct VMContext* ctx,
                       const uint32_t numRegs,
                       const uint32_t numFuns,
                                 Reg* registers,
-                             FunPtr* funtable);
+                             FunPtr* funtable,
+                           uint32_t* code,
+                            uint32_t codesize
+                             );
 
 // Reads an instruction, executes it, then steps to the next instruction.
 // stepVMContext :: VMContext -> uint32_t** -> Effect()
-void stepVMContext(struct VMContext* ctx, uint32_t** pc);
+void stepVMContext(struct VMContext* ctx);
 
 
 //---------------------------------------------------------

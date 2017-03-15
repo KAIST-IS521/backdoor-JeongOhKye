@@ -10,7 +10,7 @@
 #define NUM_FUNCS  (256)
 
 // Global variable that indicates if the process is running.
-static bool is_running = true;
+bool is_running = true;
 
 void usageExit() {
     // TODO: show usage
@@ -24,8 +24,20 @@ void initFuncs(FunPtr *f, uint32_t cnt) {
     }
 
     // TODO: initialize function pointers
-    // f[0x00] = halt;
-    // f[0x10] = load;
+    f[0x00] = halt;
+    f[0x10] = load;
+    f[0x20] = store;
+    f[0x30] = move;
+    f[0x40] = puti;
+    f[0x50] = add;
+    f[0x60] = sub;
+    f[0x70] = gt;
+    f[0x80] = ge;
+    f[0x90] = eg;
+    f[0xa0] = ite;
+    f[0xb0] = jump;
+    f[0xc0] = _puts;
+    f[0xd0] = _gets;
 }
 
 void initRegs(Reg *r, uint32_t cnt)
