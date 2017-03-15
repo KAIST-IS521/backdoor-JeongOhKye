@@ -56,6 +56,9 @@ int main(int argc, char** argv) {
     FILE* bytecode;
     uint32_t* pc;
 
+    uint32_t* code;
+    uint32_t codesize;
+
     // There should be at least one argument.
     if (argc < 2) usageExit();
 
@@ -63,8 +66,6 @@ int main(int argc, char** argv) {
     initRegs(r, NUM_REGS);
     // Initialize interpretation functions.
     initFuncs(f, NUM_FUNCS);
-    // Initialize VM context.
-    initVMContext(&vm, NUM_REGS, NUM_FUNCS, r, f);
 
     // Load bytecode file
     bytecode = fopen(argv[1], "rb");
@@ -72,10 +73,22 @@ int main(int argc, char** argv) {
         perror("fopen");
         return 1;
     }
+   
+    fseek(bytecode, 0, SEEK_END);
+    codesize = ftell(bytecode);
+
+    code = calloc(4, codesize/4);
+
+    fseek(bytecode, 0, SEEK_SET);
+    fread(code, 4, codesize/4, bytecode);
+
+
+    // Initialize VM context.
+    initVMContext(&vm, NUM_REGS, NUM_FUNCS, r, f, code, codesize);
 
     while (is_running) {
         // TODO: Read 4-byte bytecode, and set the pc accordingly
-        stepVMContext(&vm, &pc);
+        stepVMContext(&vm);
     }
 
     fclose(bytecode);
