@@ -143,9 +143,14 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
         }
         c = getchar(); 
         if(c == 10)
-            break;
-        ctx->Memory[reg1value] = c;
-        reg1value += 1;
+		break;
+	ctx->Memory[reg1value] = c;
+	reg1value += 1;
+    }
+    if(reg1value > DEFAULT_HEAP_SIZE){
+	    printf("Memory Access Out of Bound\n");
+	    is_running = false;
+	    return;
     }
     //Set zero to final
     ctx->Memory[reg1value] = 0;
