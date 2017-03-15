@@ -89,7 +89,6 @@ int main(int argc, char** argv) {
         // TODO: Read 4-byte bytecode, and set the pc accordingly
         stepVMContext(&vm);
     }
-
     fclose(bytecode);
 
     // Zero indicates normal termination.

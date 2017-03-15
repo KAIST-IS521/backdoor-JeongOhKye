@@ -118,7 +118,7 @@ void _puts(struct VMContext* ctx, const uint32_t instr){
     uint32_t reg1value = ctx->r[reg1].value;
     char c;
     while(true){
-        if(reg1value > DEFAULT_HEAP_SIZE){
+        if(reg1value >= DEFAULT_HEAP_SIZE){
             printf("Memory Access Out of Bound\n");
             is_running = false;
             return;
@@ -136,7 +136,7 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
     uint32_t reg1value = ctx->r[reg1].value;
     char c;
     while(true){
-        if(reg1value > DEFAULT_HEAP_SIZE){
+        if(reg1value >= DEFAULT_HEAP_SIZE){
             printf("Memory Access Out of Bound\n");
             is_running = false;
             return;
@@ -147,7 +147,7 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
 	ctx->Memory[reg1value] = c;
 	reg1value += 1;
     }
-    if(reg1value > DEFAULT_HEAP_SIZE){
+    if(reg1value >= DEFAULT_HEAP_SIZE){
 	    printf("Memory Access Out of Bound\n");
 	    is_running = false;
 	    return;
