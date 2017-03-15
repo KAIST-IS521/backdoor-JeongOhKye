@@ -10,9 +10,11 @@
 
 extern bool is_running;
 
+#define UNUSED __attribute__((unused)) 
+
 //---------------------------------------------------------
 // FUNCTION IMPLEMENTATIONS:
-void halt(struct VMContext* ctx, const uint32_t instr){
+void halt(UNUSED struct VMContext* ctx, UNUSED const uint32_t instr){
     is_running = false;
 }
 
@@ -117,7 +119,7 @@ void _puts(struct VMContext* ctx, const uint32_t instr){
     char c;
     while(true){
         if(reg1value > DEFAULT_HEAP_SIZE){
-            perror("Memory Access Out of Bound\n");
+            printf("Memory Access Out of Bound\n");
             is_running = false;
             return;
         }
@@ -135,7 +137,7 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
     char c;
     while(true){
         if(reg1value > DEFAULT_HEAP_SIZE){
-            perror("Memory Access Out of Bound\n");
+            printf("Memory Access Out of Bound\n");
             is_running = false;
             return;
         }
@@ -177,6 +179,13 @@ void initVMContext(struct VMContext* ctx, const uint32_t numRegs, const uint32_t
 void stepVMContext(struct VMContext* ctx) {
     // Read a 32-bit bytecode instruction.
     uint32_t instr;
+    //Program Counter Check
+    if(ctx->pc >= ctx->codesize){
+        perror("Instruction does not exist\n");
+        is_running = false;
+        return;
+    }
+
     instr = ctx->code[ctx->pc]; 
 
     // Increment to next instruction.

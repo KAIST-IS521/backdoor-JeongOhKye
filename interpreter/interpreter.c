@@ -33,7 +33,7 @@ void initFuncs(FunPtr *f, uint32_t cnt) {
     f[0x60] = sub;
     f[0x70] = gt;
     f[0x80] = ge;
-    f[0x90] = eg;
+    f[0x90] = eq;
     f[0xa0] = ite;
     f[0xb0] = jump;
     f[0xc0] = _puts;
@@ -54,7 +54,6 @@ int main(int argc, char** argv) {
     Reg r[NUM_REGS];
     FunPtr f[NUM_FUNCS];
     FILE* bytecode;
-    uint32_t* pc;
 
     uint32_t* code;
     uint32_t codesize;
