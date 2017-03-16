@@ -4,7 +4,8 @@ TotalCode = ''
 LabelTable = {}
 LineCount = 0
 
-Value1Reg = "r0"
+Value1Reg = "r111"
+RetReg = "r0" 
 
 def UpdateCode(Str):
     global TotalCode
@@ -30,6 +31,12 @@ def ProcessASM(Line):
     elif cmd == ';':
         UpdateCode(Line)
         LineCount -= 1
+    elif cmd == 'inc':
+        reg = bl[0]
+        UpdateCode("add %s,%s,%s" % (reg, reg, Value1Reg))
+    elif cmd == 'dec':
+        reg = bl[0]
+        UpdateCode("sub %s,%s,%s" % (reg, reg, Value1Reg))
 
     elif cmd == 'setStr':
         dstReg = bl[0]
@@ -74,7 +81,7 @@ def ProcessASM(Line):
             UpdateCode("add %s, %s, %s" % (SumReg, SumReg, Resultreg))
             UpdateCode("add %s, %s, %s" % (TmpReg, TmpReg, Value1Reg))
         UpdateCode("puti r254, %d" % (len(String)))
-        UpdateCode("eq r255, r254, %s" % (SumReg))
+        UpdateCode("eq %s, r254, %s" % (RetReg, SumReg))
     elif cmd == 'if':
         dstReg = bl[0]
         Truego = bl[1]
