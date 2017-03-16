@@ -48,6 +48,7 @@ if r0,FinalEnd,SimpleLoop
 ; r204 is thousand
 ; r209 is final result
 puti r10,10
+goto CheckCount2
 
 : MakeNumber
 inc r201
@@ -69,6 +70,7 @@ inc r204
 
 : CheckCount
 inc r199
+: CheckCount2
 ge r0,r199,r209
 if r0,RealFinal,MakeNumber
 

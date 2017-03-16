@@ -14,6 +14,7 @@ bool is_running = true;
 
 void usageExit() {
     // TODO: show usage
+    printf("./interpreter [mini bytecode file]\n");
     exit(1);
 }
 

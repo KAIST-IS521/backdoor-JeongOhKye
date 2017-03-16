@@ -147,22 +147,23 @@ ite r0, 136, 132
 ; r204 is thousand
 ; r209 is final result
 puti r10,10
+jump 152
 add r201,r201,r111
 eq r0,r201,r10
-ite r0, 140, 150
+ite r0, 141, 151
 puti r201,0
 add r202,r202,r111
 eq r0,r202,r10
-ite r0, 144, 150
+ite r0, 145, 151
 puti r202,0
 add r203,r203,r111
 eq r0,r203,r10
-ite r0, 148, 150
+ite r0, 149, 151
 puti r203,0
 add r204,r204,r111
 add r199,r199,r111
 ge r0,r199,r209
-ite r0, 153, 137
+ite r0, 154, 138
 move r255, r1
 puti r254, 79
 store r255, r254
