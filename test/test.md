@@ -9,8 +9,8 @@
 ## Test Description
 This test source is for calculating sum up to Number N.   
 Because my Program can only show 4 digit number, max number of N is 140 (the sum is 9870)
-> **Input --> Number N**
-> **Output --> Sum of up-to number N in decimal number**
+> **Input --> Number N**    
+> **Output --> Sum of up-to number N in decimal number**  
 
 ## Pseudo-Code
 ### Simple Version

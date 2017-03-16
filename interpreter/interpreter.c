@@ -14,6 +14,7 @@ bool is_running = true;
 
 void usageExit() {
     // TODO: show usage
+    printf("./interpreter [mini bytecode file]\n");
     exit(1);
 }
 
@@ -72,12 +73,15 @@ int main(int argc, char** argv) {
         perror("fopen");
         return 1;
     }
-   
+  
+    //Calculate the file size
     fseek(bytecode, 0, SEEK_END);
     codesize = ftell(bytecode);
 
+    //Allocate the space
     code = calloc(4, codesize/4);
 
+    //Read Code Data
     fseek(bytecode, 0, SEEK_SET);
     fread(code, 4, codesize/4, bytecode);
 
