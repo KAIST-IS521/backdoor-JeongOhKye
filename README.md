@@ -19,6 +19,9 @@
   * For Doing this Activity, I made simple code compiler to make code easily.
   * `login.my` and `test.my` is the original my style code of `login/login.mini` and `test/test.mini`
 
+* TODO
+  * ADD Comment to each files
+
 ---
 # Feelings
 > I can learn the operation method of interpreter. And making the test program is very interesting.
