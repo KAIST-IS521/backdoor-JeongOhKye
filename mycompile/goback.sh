@@ -3,7 +3,7 @@ FN=${FileName##*/}
 WithoutExt=${FN%.*}
 
 python compiler.py $FileName  > $WithoutExt.mini
-ocaml str.cma ../compiler/compiler.ml $WithoutExt.mini $WithoutExt.bin
-../backdoor/build/interpreter $WithoutExt.bin
+ocaml str.cma ../compiler/compiler.ml $WithoutExt.mini $WithoutExt.minibyte
+../backdoor/build/interpreter $WithoutExt.minibyte
 
 
