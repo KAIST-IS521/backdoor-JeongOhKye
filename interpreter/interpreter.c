@@ -83,14 +83,14 @@ int main(int argc, char** argv) {
 
 
     // Initialize VM context.
-    initVMContext(&vm, NUM_REGS, NUM_FUNCS, r, f, code, codesize);
+    initVMContext(&vm, NUM_REGS, NUM_FUNCS, r, f, code, codesize/4);
 
     while (is_running) {
         // TODO: Read 4-byte bytecode, and set the pc accordingly
         stepVMContext(&vm);
     }
     fclose(bytecode);
-
+    
     // Zero indicates normal termination.
     return 0;
 }

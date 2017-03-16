@@ -4,7 +4,7 @@ TotalCode = ''
 LabelTable = {}
 LineCount = 0
 
-Value1Reg = "r1"
+Value1Reg = "r111"
 RetReg = "r0" 
 
 def UpdateCode(Str):
@@ -31,6 +31,12 @@ def ProcessASM(Line):
     elif cmd == ';':
         UpdateCode(Line)
         LineCount -= 1
+    elif cmd == 'inc':
+        reg = bl[0]
+        UpdateCode("add %s,%s,%s" % (reg, reg, Value1Reg))
+    elif cmd == 'dec':
+        reg = bl[0]
+        UpdateCode("sub %s,%s,%s" % (reg, reg, Value1Reg))
 
     elif cmd == 'setStr':
         dstReg = bl[0]
