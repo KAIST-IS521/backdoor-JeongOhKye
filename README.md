@@ -15,7 +15,7 @@
   * `test.mini` : My test program source code with mini language
   * `test.md` : The description of my test.mini source code
   * `test.sh` : Just convenience in executing test.mini
-* mycompile : My Style Compiler
+* **mycompile** : My Style Compiler
   * For Doing this Activity, I made simple code compiler to make code easily.
   * `login.my` and `test.my` is the original my style code of `login/login.mini` and `test/test.mini`
 
