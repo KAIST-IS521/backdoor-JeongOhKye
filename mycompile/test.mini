@@ -55,7 +55,7 @@ add r255, r255, r111
 puti r254, 49
 store r255, r254
 add r255, r255, r111
-puti r254, 48
+puti r254, 52
 store r255, r254
 add r255, r255, r111
 puti r254, 48

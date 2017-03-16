@@ -1,6 +1,6 @@
 puti r48,48
 
-setStr r1,"Sum-up to N (Max:100)\n"
+setStr r1,"Sum-up to N (Max:140)\n"
 printf r1
 setStr r1,"Input the N: "
 printf r1
