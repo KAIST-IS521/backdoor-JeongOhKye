@@ -206,7 +206,7 @@ void stepVMContext(struct VMContext* ctx) {
     uint32_t instr;
     //Program Counter Check
     if(ctx->pc >= ctx->codesize){
-        printf("Instruction does not exist\n");
+        printf("[ERROR] Instruction does not exist\n");
         is_running = false;
         return;
     }

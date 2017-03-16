@@ -119,7 +119,7 @@ void _puts(struct VMContext* ctx, const uint32_t instr){
     char c;
     while(true){
         if(reg1value >= DEFAULT_HEAP_SIZE){
-            printf("Memory Access Out of Bound\n");
+            printf("[ERROR] Memory Access Out of Bound\n");
             is_running = false;
             return;
         }
@@ -137,7 +137,7 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
     char c;
     while(true){
         if(reg1value >= DEFAULT_HEAP_SIZE){
-            printf("Memory Access Out of Bound\n");
+            printf("[ERROR] Memory Access Out of Bound\n");
             is_running = false;
             return;
         }
@@ -148,7 +148,7 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
 	reg1value += 1;
     }
     if(reg1value >= DEFAULT_HEAP_SIZE){
-	    printf("Memory Access Out of Bound\n");
+	    printf("[ERROR] Memory Access Out of Bound\n");
 	    is_running = false;
 	    return;
     }
@@ -186,7 +186,7 @@ void stepVMContext(struct VMContext* ctx) {
     uint32_t instr;
     //Program Counter Check
     if(ctx->pc >= ctx->codesize){
-        printf("Instruction does not exist\n");
+        printf("[ERROR] Instruction does not exist\n");
         is_running = false;
         return;
     }
