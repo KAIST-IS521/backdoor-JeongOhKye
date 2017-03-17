@@ -205,7 +205,7 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
 }
 
 bool opcodecheck(uint8_t opcode){
-    if(opcode & 0xf == 0 && opcode & 0xf0 < 0xf0)
+    if((opcode & 0xf) == 0 && (opcode & 0xf0) < 0xe0)
         return true;
     return false;
 }
