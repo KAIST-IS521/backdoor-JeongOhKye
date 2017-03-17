@@ -23,6 +23,12 @@ void load(struct VMContext* ctx, const uint32_t instr){
     uint8_t reg1 = EXTRACT_B1(instr); 
     uint8_t reg2 = EXTRACT_B2(instr);
     uint32_t reg2value = ctx->r[reg2].value;
+    //Memory Access Check
+    if(reg2value >= DEFAULT_HEAP_SIZE){
+        printf("[ERROR] Memory Access Out of Bound\n");
+        is_running = false;
+        return;
+    }
 
     ctx->r[reg1].value = (uint32_t)ctx->Memory[reg2value];
 }
@@ -32,7 +38,13 @@ void store(struct VMContext* ctx, const uint32_t instr){
     uint8_t reg1 = EXTRACT_B1(instr); 
     uint8_t reg2 = EXTRACT_B2(instr);
     uint32_t reg1value = ctx->r[reg1].value;
-    
+    //Memory Access Check
+    if(reg1value >= DEFAULT_HEAP_SIZE){
+        printf("[ERROR] Memory Access Out of Bound\n");
+        is_running = false;
+        return;
+    }
+   
     ctx->Memory[reg1value] = (uint8_t)ctx->r[reg2].value;
 }
 
@@ -172,12 +184,27 @@ void _gets(struct VMContext* ctx, const uint32_t instr){
     ctx->Memory[reg1value] = 0;
 }
 
+bool opcodecheck(uint8_t opcode){
+    if(opcode & 0xf == 0 && opcode & 0xf0 < 0xf0)
+        return true;
+    return false;
+}
+
+
 
 // Defers decoding of register args to the called function.
 // dispatch :: VMContext -> uint32_t -> Effect()
 void dispatch(struct VMContext* ctx, const uint32_t instr) {
     const uint8_t i = EXTRACT_B0(instr);
-    (*ctx->funtable[i])(ctx, instr);
+
+    //OPCode check
+    if(opcodecheck(i)){
+        (*ctx->funtable[i])(ctx, instr);
+    }
+    else{
+        is_running=false;
+        printf("[ERROR] Invalid Opcode\n");
+    }
 }
 
 
